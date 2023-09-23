@@ -17,6 +17,12 @@ const Navbar = () => {
         </li>
 
         <li>
+          <Link className="hover:underline" href="/sign-out">
+            Sign Out
+          </Link>
+        </li>
+
+        <li>
           <Link className="hover:underline" href="/profile">
             Profile
           </Link>
