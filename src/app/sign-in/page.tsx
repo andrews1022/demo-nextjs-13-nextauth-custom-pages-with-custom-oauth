@@ -1,7 +1,11 @@
+import SignInButton from "@/components/SignInButton";
+
 const SignInPage = () => {
   return (
-    <div>
-      <h1>SignInPage</h1>
+    <div className="pl-4">
+      <h1 className="text-2xl">SignInPage</h1>
+
+      <SignInButton />
     </div>
   );
 };

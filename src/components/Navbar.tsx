@@ -2,16 +2,24 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul>
+    <nav className="bg-blue-600 mb-4 py-4 pl-4 text-white">
+      <ul className="flex gap-x-4">
         <li>
-          <Link href="/">Home</Link>
+          <Link className="hover:underline" href="/">
+            Home
+          </Link>
         </li>
+
         <li>
-          <Link href="/sign-in">Sign In</Link>
+          <Link className="hover:underline" href="/sign-in">
+            Sign In
+          </Link>
         </li>
+
         <li>
-          <Link href="/profile">Profile</Link>
+          <Link className="hover:underline" href="/profile">
+            Profile
+          </Link>
         </li>
       </ul>
     </nav>
