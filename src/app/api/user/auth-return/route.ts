@@ -30,11 +30,9 @@ export const GET = async (request: NextRequest) => {
     `);
   }
 
-  // return res.json();
-
   const data = await res.json();
   console.log("data: ", data);
-  // return NextResponse.json(data);
+  return NextResponse.json(data);
 
-  return NextResponse.redirect(new URL("/profile", request.url));
+  // return NextResponse.redirect(new URL("/profile", request.url));
 };

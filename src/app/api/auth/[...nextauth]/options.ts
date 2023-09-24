@@ -1,4 +1,5 @@
 import type { AuthOptions } from "next-auth";
+import Providers from "next-auth/providers";
 
 export const options: AuthOptions = {
   // callbacks: {
@@ -25,6 +26,7 @@ export const options: AuthOptions = {
   //     };
   //   }
   // },
+
   pages: {
     signIn: "/sign-in",
     signOut: "/sign-out"
@@ -37,57 +39,69 @@ export const options: AuthOptions = {
       wellKnown: "https://api.trackmania.com/.well-known/openid-configuration",
       authorization: {
         params: {
-          // response_type: "code",
-          // client_id: process.env.TM_OAUTH_CLIENT_ID,
-          scope: "clubs read_favorite write_favorite",
+          response_type: "code",
+          client_id: process.env.TM_OAUTH_CLIENT_ID,
+          scope: "write_favorite",
+          // scope: "clubs read_favorite write_favorite",
+          // scope: "openid",
           redirect_uri: "http://localhost:3000/api/user/auth-return"
         },
         url: "https://api.trackmania.com/oauth/authorize"
       },
       // idToken: true,
       // checks: ["state"],
-      profile(profile) {
+      profile(profile, tokens) {
         console.log("profile: ", profile);
+        console.log("tokens: ", tokens);
 
         return {
-          ...profile
+          ...profile,
+          ...tokens
         };
       },
-      clientId: process.env.TM_OAUTH_CLIENT_ID
-      // clientSecret: process.env.TM_OAUTH_SECRET_ID,
+      clientId: process.env.TM_OAUTH_CLIENT_ID,
+      clientSecret: process.env.TM_OAUTH_SECRET_ID,
+      issuer: "https://api.trackmania.com/",
+      token: {
+        url: "https://api.trackmania.com/api/access_token"
+      },
+      userinfo: {
+        url: "https://api.trackmania.com/api/user"
+      }
+
       // profile(profile) {
       //   return {
       //     ...profile
       //   };
       // },
       // token: {
-      // url: "https://api.trackmania.com/api/access_token"
-      // async request(context) {
-      //   console.log("token context: ", context);
+      //   url: "https://api.trackmania.com/api/access_token",
+      //   async request(context) {
+      //     console.log("token context: ", context);
 
-      //   const code = context.params.code;
+      //     const code = context.params.code;
 
-      //   const url = "https://api.trackmania.com/api/access_token";
-      //   const resp = await fetch(url, {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     },
-      //     body: JSON.stringify({
-      //       grant_type: "authorization_code",
-      //       client_id: process.env.TM_OAUTH_CLIENT_ID,
-      //       client_secret: process.env.TM_OAUTH_SECRET_ID,
-      //       code: code,
-      //       redirect_uri: "http://localhost:3000/api/user/auth-return"
-      //     })
-      //   });
+      //     const url = "https://api.trackmania.com/api/access_token";
+      //     const resp = await fetch(url, {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json"
+      //       },
+      //       body: JSON.stringify({
+      //         grant_type: "authorization_code",
+      //         client_id: process.env.TM_OAUTH_CLIENT_ID,
+      //         client_secret: process.env.TM_OAUTH_SECRET_ID,
+      //         code: code,
+      //         redirect_uri: "http://localhost:3000/api/user/auth-return"
+      //       })
+      //     });
 
-      //   const data = await resp.json();
+      //     const data = await resp.json();
 
-      //   return {
-      //     tokens: data
-      //   };
-      // }
+      //     return {
+      //       tokens: data
+      //     };
+      //   }
       // }
       // client: {
       //   client_id: process.env.TM_OAUTH_CLIENT_ID,
@@ -99,31 +113,29 @@ export const options: AuthOptions = {
       //   token_endpoint_auth_method: "client_secret_basic"
       // },
       // userinfo: {
-      // url: "https://api.trackmania.com/api/user"
-      // async request(context) {
-      //   console.log("userinfo context: ", context);
+      //   // url: "https://api.trackmania.com/api/user",
+      //   async request(context) {
+      //     console.log("userinfo context: ", context);
 
-      //   const resp = await fetch("https://api.trackmania.com/api/user", {
-      //     method: "GET",
-      //     headers: {
-      //       Authorization: `Bearer ${context.tokens.access_token}`
-      //     }
-      //   });
-      //   const data = await resp.json();
+      //     const resp = await fetch("https://api.trackmania.com/api/user", {
+      //       method: "GET",
+      //       headers: {
+      //         Authorization: `Bearer ${context.tokens.access_token}`
+      //       }
+      //     });
+      //     // const data = await resp.json();
 
-      //   // return await makeUserinfoRequest(context)
-      //   // const resp = await axios({
-      //   //     method: 'GET',
-      //   //     url: 'https://fcp.integ01.dev-franceconnect.fr/api/v1/userinfo?schema=openid',
-      //   //     headers: {
-      //   //         Authorization: `Bearer ${context.tokens.access_token}`,
-      //   //     },
-      //   // })
-      //   // return resp.data
-      //   return {
-      //     tokens: data
-      //   };
-      // }
+      //     // return await makeUserinfoRequest(context)
+      //     // const resp = await axios({
+      //     //     method: 'GET',
+      //     //     url: 'https://fcp.integ01.dev-franceconnect.fr/api/v1/userinfo?schema=openid',
+      //     //     headers: {
+      //     //         Authorization: `Bearer ${context.tokens.access_token}`,
+      //     //     },
+      //     // })
+      //     // return resp.data
+      //     return resp.json();
+      //   }
       // }
       // issuer: "https://api.trackmania.com/"
     }
