@@ -1,14 +1,14 @@
 "use client";
 
-const SignInButton = () => {
-  const handleOnClick = () => {
-    console.log("clicked!");
-  };
+import { signIn } from "next-auth/react";
 
+const SignInButton = () => {
   return (
     <button
       className="border-2 border-blue-600 inline-block mt-4 py-2 px-4 rounded-md text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition-colors"
-      onClick={handleOnClick}
+      onClick={() =>
+        signIn("trackmania", { callbackUrl: "http://localhost:3000/api/user/auth-return" })
+      }
       type="button"
     >
       Sign In With OAuth
