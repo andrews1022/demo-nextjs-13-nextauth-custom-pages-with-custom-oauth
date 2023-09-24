@@ -8,13 +8,10 @@ export const options: AuthOptions = {
   //     console.log("jwt token: ", token);
   //     console.log("jwt user: ", user);
 
-  //     return token;
-  //   },
-  //   async redirect({ baseUrl, url }) {
-  //     console.log("redirect baseUrl: ", baseUrl);
-  //     console.log("redirect url: ", url);
-
-  //     return url;
+  //     return {
+  //       ...token,
+  //       ...user
+  //     };
   //   },
   //   async session({ newSession, session, token, trigger, user }) {
   //     console.log("session newSession: ", newSession);
@@ -23,7 +20,9 @@ export const options: AuthOptions = {
   //     console.log("session trigger: ", trigger);
   //     console.log("session user: ", user);
 
-  //     return session;
+  //     return {
+  //       ...session
+  //     };
   //   }
   // },
   pages: {
@@ -128,25 +127,9 @@ export const options: AuthOptions = {
       // }
       // issuer: "https://api.trackmania.com/"
     }
-  ]
+  ],
   // secret: process.env.NEXTAUTH_SECRET,
-  // session: {
-  //   strategy: "jwt"
-  // }
+  session: {
+    strategy: "jwt"
+  }
 };
-
-// {
-//   issuer: "https://api.trackmania.com/",
-//   authorization_endpoint: "https://api.trackmania.com/oauth/authorize",
-//   token_endpoint: "https://api.trackmania.com/api/access_token",
-//   userinfo_endpoint: "https://api.trackmania.com/api/user",
-//   scopes_supported: [ ],
-//   response_types_supported: [
-//   "code",
-//   "token"
-//   ],
-//   grant_types_supported: [
-//   "authorization_code",
-//   "client_credentials"
-//   ]
-//   }
