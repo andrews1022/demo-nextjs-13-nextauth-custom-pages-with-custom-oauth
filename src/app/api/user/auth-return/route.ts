@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
-  // console.log("request: ", request);
+  console.log("request headers: ", request.headers);
 
   const code = request.nextUrl.searchParams.get("code") || "";
 
@@ -32,7 +32,7 @@ export const GET = async (request: NextRequest) => {
 
   const data = await res.json();
   console.log("data: ", data);
-  return NextResponse.json(data);
+  // return NextResponse.json(data);
 
-  // return NextResponse.redirect(new URL("/profile", request.url));
+  return NextResponse.redirect(new URL("/profile", request.url));
 };
